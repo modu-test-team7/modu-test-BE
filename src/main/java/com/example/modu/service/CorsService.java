@@ -10,14 +10,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class CorsService {
 
-    // + 발급 되었을때 위치랑 요청했을때의 클라이언트 주소가 같은지 추가로 확인해 CSRF 방어
-
     private final String[] passUrls = {"http://localhost"};
 
-    private boolean checkCors(HttpServletRequest request , String passPath) {
-        String path = request.getRemoteUser();
-        return path.startsWith(passPath);
-    }// 확인 필요
+    public boolean checkCors(HttpServletRequest request) {
+        String path = request.getRemoteAddr();
+        for (String passUrl : passUrls) {
+            if (path.startsWith(passUrl)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public void validateUrl(HttpServletRequest request)
     {
