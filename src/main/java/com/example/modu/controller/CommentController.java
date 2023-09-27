@@ -24,9 +24,8 @@ public class CommentController {
     @PostMapping("{testerId}/comment")
     public ResponseEntity<StatusResponseDto> createComment(@PathVariable Long testerId,
                                                            @RequestBody CommentRequestDto requestDto,
-                                                           @CookieValue(JwtUtil.AUTHORIZATION_HEADER) String token,
                                                            HttpServletRequest request){
-        return commentService.createComment(testerId, requestDto, jwtUtil.getUserFromToken(token, request));
+        return commentService.createComment(testerId, requestDto, jwtUtil.getUserFromToken());
     }
 
     // 댓글 수정
@@ -34,18 +33,16 @@ public class CommentController {
     public ResponseEntity<StatusResponseDto> updateComment(@PathVariable Long testerId,
                                                            @PathVariable Long commentId,
                                                            @RequestBody CommentRequestDto requestDto,
-                                                           @CookieValue(JwtUtil.AUTHORIZATION_HEADER) String token,
                                                            HttpServletRequest request){
-        return commentService.updateComment(testerId, commentId, requestDto, jwtUtil.getUserFromToken(token, request));
+        return commentService.updateComment(testerId, commentId, requestDto, jwtUtil.getUserFromToken());
     }
 
     // 댓글 삭제
     @DeleteMapping("{testerId}/comment/{commentId}")
     public ResponseEntity<StatusResponseDto> deleteComment(@PathVariable Long testerId,
                                                            @PathVariable Long commentId,
-                                                           @CookieValue(JwtUtil.AUTHORIZATION_HEADER) String token,
                                                            HttpServletRequest request){
-        return commentService.deleteComment(testerId, commentId, jwtUtil.getUserFromToken(token, request));
+        return commentService.deleteComment(testerId, commentId, jwtUtil.getUserFromToken());
     }
 }
 

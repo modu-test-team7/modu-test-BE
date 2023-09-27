@@ -30,5 +30,6 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
         String token = jwtUtil.createToken(username, UserRoleEnum.USER);
         jwtUtil.addJwtToCookie(token, response);
 
+        // ---------- 도메인이 다르면 쿠키 전달 이 안됨
     }
 }

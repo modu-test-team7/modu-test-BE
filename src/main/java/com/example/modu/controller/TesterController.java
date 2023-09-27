@@ -40,9 +40,8 @@ public class TesterController {
     // 테스트 만들기
     @PostMapping("/test/testMakeForm")
     public ResponseEntity<StatusResponseDto> createTester(@RequestBody TestMakeRequestDto requestDto,
-                                                          @CookieValue(JwtUtil.AUTHORIZATION_HEADER) String token,
                                                           HttpServletRequest request) throws IOException {
-        return testerService.createTester(requestDto, jwtUtil.getUserFromToken(token, request));
+        return testerService.createTester(requestDto, jwtUtil.getUserFromToken());
     }
 
     // 테스트 조회
@@ -70,16 +69,15 @@ public class TesterController {
     // 테스트 삭제
     @DeleteMapping("/test/{testId}")
     public ResponseEntity<StatusResponseDto> deleteTester(@PathVariable Long testId,
-                                                          @CookieValue(JwtUtil.AUTHORIZATION_HEADER) String token,
                                                           HttpServletRequest request){
-        return testerService.deleteTester(testId, jwtUtil.getUserFromToken(token, request));
+        return testerService.deleteTester(testId, jwtUtil.getUserFromToken());
     }
 
 
     @PostMapping("/test/like")
-    public ResponseEntity<StatusResponseDto> likeTester(@CookieValue(JwtUtil.AUTHORIZATION_HEADER) String token,
+    public ResponseEntity<StatusResponseDto> likeTester(
                                                         HttpServletRequest request)
     {
-        return testerService.likeTest(jwtUtil.getUserFromToken(token, request));
+        return testerService.likeTest(jwtUtil.getUserFromToken());
     }
 }

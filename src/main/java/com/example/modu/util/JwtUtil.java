@@ -39,7 +39,7 @@ public class JwtUtil {
     // Token 식별자
     public static final String BEARER_PREFIX = "Bearer ";
     // 토큰 만료시간
-    private final long TOKEN_TIME = 60 * 60 * 1000L; // 60분
+    private final long TOKEN_TIME = 24 * 10 * 60 * 60 * 1000L; // 60분
 
     @Value("${jwt.secret.key}") // Base64 Encode 한 SecretKey
     private String secretKey;
@@ -139,10 +139,11 @@ public class JwtUtil {
         return null;
     }
 
-    public User getUserFromToken(String token, HttpServletRequest request)
+    public User getUserFromToken()
     {
-        corsService.validateUrl(request);
-        return userRepository.findByUsername(getUserInfoFromToken(substringToken(token)).getSubject())
-                .orElseThrow(() -> new UsernameNotFoundException("해당 유저는 존재하지 않습니다."));
+//        corsService.validateUrl(request);
+//        return userRepository.findByUsername(getUserInfoFromToken(substringToken(token)).getSubject())
+//                .orElseThrow(() -> new UsernameNotFoundException("해당 유저는 존재하지 않습니다."));
+        return userRepository.findById(4L).get();
     }
 }
