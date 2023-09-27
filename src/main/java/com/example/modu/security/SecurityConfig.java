@@ -26,7 +26,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT"));//DELETE 가 없어요.
+        configuration.setAllowedHeaders(Arrays.asList("*"));
 
         // Access-Control-Allow-Credentials 값을 true로 설정
         configuration.setAllowCredentials(true);
