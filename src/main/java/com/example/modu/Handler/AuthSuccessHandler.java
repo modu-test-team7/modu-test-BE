@@ -24,11 +24,12 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
         log.info("login Success");
 
 
-        String username = ((UserDetails) authentication.getPrincipal()).getUsername();
-        //UserRoleEnum role = ((UserDetails) authentication.getPrincipal()).getUser().getRole();
-
-        String token = jwtUtil.createToken(username, UserRoleEnum.USER);
-        jwtUtil.addJwtToCookie(token, response);
+//        String username = ((UserDetails) authentication.getPrincipal()).getUsername();
+//        //UserRoleEnum role = ((UserDetails) authentication.getPrincipal()).getUser().getRole();
+//
+//        String token = jwtUtil.createToken(username, UserRoleEnum.USER);
+//        jwtUtil.addJwtToCookie(token, response);
+//        //response.addHeader();
 
         // ---------- 도메인이 다르면 쿠키 전달 이 안됨
     }
