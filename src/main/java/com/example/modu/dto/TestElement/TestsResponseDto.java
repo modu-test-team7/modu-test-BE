@@ -5,6 +5,7 @@ import com.example.modu.dto.result.QuestionResponseDto;
 import com.example.modu.entity.TestElement.Tester;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;

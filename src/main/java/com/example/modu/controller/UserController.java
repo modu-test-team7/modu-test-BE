@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -57,18 +58,18 @@ public class UserController {
         return ResponseEntity.ok("Logout");
     }
     @PutMapping("/update")
-    private ResponseEntity<StatusResponseDto> update(
-                                                     @RequestBody UserUpdateRequestDto update,
+    private ResponseEntity<StatusResponseDto> update(@RequestBody UserUpdateRequestDto update,
                                                      HttpServletRequest request)
     {
         return userService.update(jwtUtil.getUserFromHeader(request), update);
     }
-    
+
     // +++ 프로필 사진 변경 API 추가
-//    @PutMapping("/update-profile")
-//    private ResponseEntity<StatusResponseDto> updateProfile(HttpServletRequest request) throws IOException {
-//        return userService.updateProfile(jwtUtil.getUserFromToken(),multipartFile);
-//    }
+    @PutMapping("/update-profile")
+    private ResponseEntity<StatusResponseDto> updateProfile(@RequestParam("images") MultipartFile multipartFile,
+                                                            HttpServletRequest request) throws IOException {
+        return userService.updateProfile(jwtUtil.getUserFromHeader(request),multipartFile);
+    }
     
     @DeleteMapping("/delete")
     private ResponseEntity<StatusResponseDto> deleteUser(HttpServletRequest request)
@@ -91,16 +92,14 @@ public class UserController {
     }
 
     @GetMapping("/tests")
-    private ResponseEntity<List<TestsResponseDto>> makedTests(
-                                                              HttpServletRequest request)
+    private ResponseEntity<List<TestsResponseDto>> makedTests(HttpServletRequest request)
     {
         return userService.makedTests(jwtUtil.getUserFromHeader(request));
     }
     
     
     @GetMapping("/join")
-    private ResponseEntity<List<TestsResponseDto>> joinTests(
-                                                             HttpServletRequest request)
+    private ResponseEntity<List<TestsResponseDto>> joinTests(HttpServletRequest request)
     {
         return userService.getJoinTests(jwtUtil.getUserFromHeader(request));
     }

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -35,9 +36,9 @@ public class TesterController {
     // 테스트 만들기
     @PostMapping("/test/testMakeForm")
     public ResponseEntity<StatusResponseDto> createTester(@RequestBody TestMakeRequestDto requestDto,
-                                                          HttpServletRequest request) throws IOException {
-        return testerService.createTester(requestDto, jwtUtil.getUserFromHeader(request));
-    }
+                                                          HttpServletRequest request) throws IOException, HttpMessageConversionException{
+            return testerService.createTester(requestDto, jwtUtil.getUserFromHeader(request));
+    }//====== 파람스 로 넣어야 포스트맨으로 파일 올릴수 있음
 
     // 테스트 조회
     @GetMapping("/tests")

@@ -99,8 +99,8 @@ public class JwtUtil {
             System.out.println(tokenValue.substring(7));
             return tokenValue.substring(7);
         }
-        logger.error("Not Found Token");
-        throw new NullPointerException("Not Found Token");
+        logger.error("Not Found Header : " + AUTHORIZATION_HEADER);
+        throw new NullPointerException("Not Found Header : " + AUTHORIZATION_HEADER);
     }
 
     //#5 JWT 검증
