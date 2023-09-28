@@ -80,8 +80,8 @@ public class UserService {
         }
 
         String token = jwtUtil.createToken(requestDto.getUsername(), UserRoleEnum.USER);
-        //jwtUtil.addJwtToCookie(token, response);
-        response.addHeader(JwtUtil.AUTHORIZATION_KEY, token);
+        //jwtUtil.addJwtToCookie(token, response); // 토큰은 도메인이 같아야 저장
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);// 어느 요청이든 저장 , 로컬 스토리지에 저장
 
         return ResponseEntity.ok(new StatusResponseDto("로그인 성공", 200));
     }

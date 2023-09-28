@@ -1,6 +1,7 @@
 package com.example.modu.security;
 
 import com.example.modu.service.CorsService;
+import com.example.modu.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +32,7 @@ public class SecurityConfig {
 
         // Access-Control-Allow-Credentials 값을 true로 설정
         configuration.setAllowCredentials(true);
+        configuration.addExposedHeader(JwtUtil.AUTHORIZATION_HEADER);// 보여줄 헤더 - 이게 없으면 콘솔에 보여도 , 가져오질 못함
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
