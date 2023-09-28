@@ -25,7 +25,7 @@ public class CommentController {
     public ResponseEntity<StatusResponseDto> createComment(@PathVariable Long testerId,
                                                            @RequestBody CommentRequestDto requestDto,
                                                            HttpServletRequest request){
-        return commentService.createComment(testerId, requestDto, jwtUtil.getUserFromToken());
+        return commentService.createComment(testerId, requestDto, jwtUtil.getUserFromHeader(request));
     }
 
     // 댓글 수정
@@ -34,7 +34,7 @@ public class CommentController {
                                                            @PathVariable Long commentId,
                                                            @RequestBody CommentRequestDto requestDto,
                                                            HttpServletRequest request){
-        return commentService.updateComment(testerId, commentId, requestDto, jwtUtil.getUserFromToken());
+        return commentService.updateComment(testerId, commentId, requestDto, jwtUtil.getUserFromHeader(request));
     }
 
     // 댓글 삭제
@@ -42,7 +42,7 @@ public class CommentController {
     public ResponseEntity<StatusResponseDto> deleteComment(@PathVariable Long testerId,
                                                            @PathVariable Long commentId,
                                                            HttpServletRequest request){
-        return commentService.deleteComment(testerId, commentId, jwtUtil.getUserFromToken());
+        return commentService.deleteComment(testerId, commentId, jwtUtil.getUserFromHeader(request));
     }
 }
 

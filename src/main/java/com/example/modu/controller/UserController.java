@@ -2,7 +2,6 @@ package com.example.modu.controller;
 
 import com.example.modu.dto.TestElement.TestsResponseDto;
 import com.example.modu.dto.user.*;
-import com.example.modu.entity.User;
 import com.example.modu.service.UserService;
 import com.example.modu.util.JwtUtil;
 import com.example.modu.util.S3Config;
@@ -10,14 +9,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -65,7 +61,7 @@ public class UserController {
                                                      @RequestBody UserUpdateRequestDto update,
                                                      HttpServletRequest request)
     {
-        return userService.update(jwtUtil.getUserFromToken(), update);
+        return userService.update(jwtUtil.getUserFromHeader(request), update);
     }
     
     // +++ 프로필 사진 변경 API 추가
@@ -75,9 +71,9 @@ public class UserController {
 //    }
     
     @DeleteMapping("/delete")
-    private ResponseEntity<StatusResponseDto> deleteUser()
+    private ResponseEntity<StatusResponseDto> deleteUser(HttpServletRequest request)
     {
-        return userService.deleteUser(jwtUtil.getUserFromToken());
+        return userService.deleteUser(jwtUtil.getUserFromHeader(request));
     }
 
     /*
@@ -88,17 +84,17 @@ public class UserController {
 
 
     @GetMapping("/mypage") //단순 페이지 이동이 아닌 초기 로드시 정보
-    private ResponseEntity<UserDataResponse> myPage()
+    private ResponseEntity<UserDataResponse> myPage(HttpServletRequest request)
         //(@AuthenticationPrincipal User user)
     {
-        return userService.myPage(jwtUtil.getUserFromToken());
+        return userService.myPage(jwtUtil.getUserFromHeader(request));
     }
 
     @GetMapping("/tests")
     private ResponseEntity<List<TestsResponseDto>> makedTests(
                                                               HttpServletRequest request)
     {
-        return userService.makedTests(jwtUtil.getUserFromToken());
+        return userService.makedTests(jwtUtil.getUserFromHeader(request));
     }
     
     
@@ -106,7 +102,7 @@ public class UserController {
     private ResponseEntity<List<TestsResponseDto>> joinTests(
                                                              HttpServletRequest request)
     {
-        return userService.getJoinTests(jwtUtil.getUserFromToken());
+        return userService.getJoinTests(jwtUtil.getUserFromHeader(request));
     }
 
     //==========

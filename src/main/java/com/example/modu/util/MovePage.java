@@ -1,2 +1,5 @@
-package com.example.modu.util;public class MovePage {
+package com.example.modu.util;
+
+@Deprecated
+public class MovePage {
 }

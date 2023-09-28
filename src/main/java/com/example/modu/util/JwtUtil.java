@@ -11,6 +11,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,7 @@ import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtUtil {
@@ -72,6 +74,7 @@ public class JwtUtil {
 
     //#3 JWT 저장
     // JWT Cookie 에 저장
+    @Deprecated
     public void addJwtToCookie(String token, HttpServletResponse res) {
         try {
             token = URLEncoder.encode(token, "utf-8").replaceAll("\\+", "%20"); // Cookie Value 에는 공백이 불가능해서 encoding 진행
@@ -139,11 +142,11 @@ public class JwtUtil {
         return null;
     }
 
-    public User getUserFromToken()
+    public User getUserFromHeader(HttpServletRequest request)
     {
-//        corsService.validateUrl(request);
-//        return userRepository.findByUsername(getUserInfoFromToken(substringToken(token)).getSubject())
-//                .orElseThrow(() -> new UsernameNotFoundException("해당 유저는 존재하지 않습니다."));
-        return userRepository.findById(4L).get();
+        String pureToken = substringToken(request.getHeader(AUTHORIZATION_HEADER));
+        validateToken(pureToken);
+        return userRepository.findByUsername(getUserInfoFromToken(pureToken).getSubject())
+                .orElseThrow(() -> new UsernameNotFoundException("해당 유저는 존재하지 않습니다."));
     }
 }

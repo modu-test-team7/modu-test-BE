@@ -3,20 +3,15 @@ package com.example.modu.controller;
 import com.example.modu.dto.TestElement.TestDetailResponseDto;
 import com.example.modu.dto.TestElement.TestMakeRequestDto;
 import com.example.modu.dto.TestElement.TestsResponseDto;
-import com.example.modu.dto.result.ResultResponseDto;
 import com.example.modu.dto.user.StatusResponseDto;
-import com.example.modu.entity.User;
 import com.example.modu.service.TesterService;
 import com.example.modu.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.List;
@@ -41,7 +36,7 @@ public class TesterController {
     @PostMapping("/test/testMakeForm")
     public ResponseEntity<StatusResponseDto> createTester(@RequestBody TestMakeRequestDto requestDto,
                                                           HttpServletRequest request) throws IOException {
-        return testerService.createTester(requestDto, jwtUtil.getUserFromToken());
+        return testerService.createTester(requestDto, jwtUtil.getUserFromHeader(request));
     }
 
     // 테스트 조회
@@ -70,7 +65,7 @@ public class TesterController {
     @DeleteMapping("/test/{testId}")
     public ResponseEntity<StatusResponseDto> deleteTester(@PathVariable Long testId,
                                                           HttpServletRequest request){
-        return testerService.deleteTester(testId, jwtUtil.getUserFromToken());
+        return testerService.deleteTester(testId, jwtUtil.getUserFromHeader(request));
     }
 
 
@@ -78,6 +73,6 @@ public class TesterController {
     public ResponseEntity<StatusResponseDto> likeTester(
                                                         HttpServletRequest request)
     {
-        return testerService.likeTest(jwtUtil.getUserFromToken());
+        return testerService.likeTest(jwtUtil.getUserFromHeader(request));
     }
 }
